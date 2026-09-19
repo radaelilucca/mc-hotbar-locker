@@ -27,6 +27,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # An annotated tag is a Git object and therefore needs an identity.
+          # Keep this scoped to the disposable Actions checkout.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           initial_version="$(sed -nE 's/^mod_version=([0-9]+\.[0-9]+\.[0-9]+)$/\1/p' gradle.properties)"
           test -n "$initial_version"
           latest_tag="$(git tag -l 'v[0-9]*' --sort=-version:refname | head -n 1)"
