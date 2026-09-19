@@ -22,4 +22,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
-      - run: ./gradlew verifyScaffold --no-daemon --no-parallel --console=plain
+      - name: Build all supported loaders
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x ./gradlew
+          ./gradlew verifyScaffold --no-daemon --no-parallel --console=plain
