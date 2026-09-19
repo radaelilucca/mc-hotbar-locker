@@ -4,6 +4,11 @@ Multiloader Minecraft mod for Fabric, Forge, and NeoForge, targeting Minecraft 1
 
 The functional design is in [PRD.md](PRD.md).
 
+## More information
+
+See the concise [project page](docs/project-page.md) for player-facing
+behavior and compatibility.
+
 ## Automation
 
 - Pull requests to `main` run the full automated verification suite.
