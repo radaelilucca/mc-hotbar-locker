@@ -1,8 +1,14 @@
 # Hotbar Locker
 
-Multiloader Minecraft mod scaffold for Fabric, Forge, and NeoForge, targeting Minecraft 1.21.1 and Java 21.
+Multiloader Minecraft mod for Fabric, Forge, and NeoForge, targeting Minecraft 1.21.1 and Java 21.
 
-The functional design is in [PRD.md](PRD.md). This initial base intentionally contains no inventory interception: it proves the build, metadata, loader entry points, shared source set, resource layout, and Mixin configuration before Phase 1 changes gameplay behavior.
+The functional design is in [PRD.md](PRD.md).
+
+## Automation
+
+- Pull requests to `main` run the full automated verification suite.
+- Pushes to `main` create a semantic version tag from Conventional Commit messages.
+- A `vX.Y.Z` tag builds the Fabric, Forge, and NeoForge artifacts and attaches them to a GitHub release as `hotbarlocker-X.Y.Z-fabric.jar`, `hotbarlocker-X.Y.Z-forge.jar`, and `hotbarlocker-X.Y.Z-neoforge.jar`.
 
 ## Requirements
 
