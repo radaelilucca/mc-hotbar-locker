@@ -1,0 +1,35 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(java_version as int)
+}
+
+sourceSets {
+    main {
+        // Loader-mapped classes are compiled by Fabric/Forge/NeoForge, while
+        // this standalone common module remains pure and unit-testable.
+        java.exclude('com/radaeli/hotbarlocker/HotbarLockService.java')
+        java.exclude('com/radaeli/hotbarlocker/HotbarLockerApi.java')
+        java.exclude('com/radaeli/hotbarlocker/mixin/**')
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.11.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = java_version as int
+}

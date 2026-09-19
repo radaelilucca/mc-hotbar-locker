@@ -1,0 +1,7 @@
+{
+  "modmenu.nameTranslation.hotbarlocker": "Trava de Hotbar",
+  "key.categories.hotbarlocker": "Hotbar Locker",
+  "key.hotbarlocker.toggle": "Alternar trava do slot da hotbar",
+  "message.hotbarlocker.locked": "Slot %s travado",
+  "message.hotbarlocker.unlocked": "Slot %s destravado"
+}

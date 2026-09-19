@@ -1,0 +1,7 @@
+{
+  "modmenu.nameTranslation.hotbarlocker": "Hotbar Locker",
+  "key.categories.hotbarlocker": "Hotbar Locker",
+  "key.hotbarlocker.toggle": "Toggle hotbar slot lock",
+  "message.hotbarlocker.locked": "Slot %s locked",
+  "message.hotbarlocker.unlocked": "Slot %s unlocked"
+}

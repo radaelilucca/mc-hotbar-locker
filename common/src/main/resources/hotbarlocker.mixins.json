@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.radaeli.hotbarlocker.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "InventoryMixin",
+    "PlayerPersistenceMixin",
+    "compat.create.ToolboxEquipPacketMixin"
+  ],
+  "client": ["client.GuiMixin"],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

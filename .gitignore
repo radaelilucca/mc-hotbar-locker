@@ -1,0 +1,16 @@
+.gradle/
+.gradle-hotbarlocker/
+**/.gradle/
+build/
+**/build/
+run/
+**/runs/
+*.log
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+out/
+bin/
+.DS_Store
