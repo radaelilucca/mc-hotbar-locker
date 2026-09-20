@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 - 2026-09-20
+
+### Fixed
+
+- Fixed dedicated NeoForge servers failing to start when Hotbar Locker loaded.
+
 ## 0.1.0 - 2026-09-19
 
 ### Added

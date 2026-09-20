@@ -14,4 +14,5 @@ tasks.register('verifyScaffold') {
     group = 'verification'
     description = 'Builds the common, Fabric, Forge, and NeoForge scaffold artifacts.'
     dependsOn(':common:check', ':fabric:build', ':forge:build', ':neoforge:build')
+    dependsOn(':neoforge:runServerSmoke')
 }

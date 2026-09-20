@@ -19,9 +19,9 @@ public final class HotbarLockerNeoForgeNetwork {
                     sync(player);
                 }))
                 .playToClient(LockStatePayload.TYPE, LockStatePayload.CODEC, (payload, context) -> context.enqueueWork(() -> {
-                    net.minecraft.client.Minecraft client = net.minecraft.client.Minecraft.getInstance();
-                    if (client.player == null) return;
-                    HotbarLockService.setMask(client.player, payload.mask());
+                    // The registrar is loaded on both physical sides. Use the
+                    // side-neutral player supplied by the receiving context.
+                    HotbarLockService.setMask(context.player(), payload.mask());
                 }));
     }
     public static void sync(ServerPlayer player) { PacketDistributor.sendToPlayer(player, new LockStatePayload(HotbarLockService.mask(player))); }
