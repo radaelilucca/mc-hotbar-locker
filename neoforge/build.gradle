@@ -31,6 +31,14 @@ neoForge {
             gameDirectory = project.file('runs/server')
             programArgument '--nogui'
         }
+        serverSmoke {
+            server()
+            gameDirectory = project.file('build/server-smoke')
+            // Unlike --initSettings, an invalid world name exits AFTER mod loading.
+            // This deliberately stops before creating a world or opening a port.
+            programArgument '--world='
+            programArgument '--nogui'
+        }
     }
 
     mods {
@@ -61,4 +69,22 @@ processResources {
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = java_version as int
+}
+
+tasks.named('runServerSmoke') {
+    timeout = java.time.Duration.ofMinutes(3)
+    doFirst {
+        // Prevent a previous successful log from satisfying this run's assertions.
+        def log = file('build/server-smoke/logs/latest.log')
+        if (log.exists()) log.text = ''
+    }
+    doLast {
+        def log = file('build/server-smoke/logs/latest.log').text
+        if (!log.contains('hotbarlocker common bootstrap initialized on NeoForge') ||
+            !log.contains('Invalid world directory specified') ||
+            log.contains('Failed to start the minecraft server') ||
+            log.contains('invalid dist DEDICATED_SERVER')) {
+            throw new GradleException('Dedicated server bootstrap failed; inspect neoforge/build/server-smoke/logs/latest.log')
+        }
+    }
 }

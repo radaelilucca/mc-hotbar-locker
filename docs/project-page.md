@@ -31,4 +31,4 @@ empty space.
 
 ## License
 
-Hotbar Locker is distributed under the [MIT License](../LICENSE).
+Hotbar Locker is distributed under the MIT License.

@@ -27,6 +27,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    dependsOn(':neoforge:classes')
+    inputs.dir(project(':neoforge').layout.buildDirectory.dir('classes/java/main'))
+    systemProperty 'hotbarlocker.neoClasses', project(':neoforge').layout.buildDirectory.dir('classes/java/main').get().asFile.absolutePath
 }
 
 tasks.withType(JavaCompile).configureEach {
