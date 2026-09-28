@@ -16,21 +16,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 abstract class GuiMixin {
     @Inject(
             method = "renderItemHotbar",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/GuiGraphics;blitSprite(Lnet/minecraft/resources/ResourceLocation;IIII)V",
-                    ordinal = 1,
-                    shift = At.Shift.BEFORE
-            )
+            at = @At("TAIL")
     )
     private void hotbarlocker$renderLockMarkersBeforeSelection(GuiGraphics graphics, DeltaTracker deltaTracker, CallbackInfo callback) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         if (player == null) return;
-        // Vanilla's 16x16 item starts at (guiWidth / 2 - 88, guiHeight - 19).
-        // Our frame is centered at local (10, 10), so its 20x20 slot origin
-        // must be two pixels before the item, one inside the hotbar background.
-        // Using the background origin (-91, -22) shifts the frame up and left.
+        // Render at TAIL, after vanilla restores its pose. The hotbar slot is
+        // 20x20 and starts two pixels above/left of its 16x16 item icon.
         int left = graphics.guiWidth() / 2 - 90;
         int top = graphics.guiHeight() - 21;
         for (int slot = 0; slot < 9; slot++) {

@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.0 - 2026-09-28
+
+### Added
+
+- Preserve locked hotbar items when clearing the inventory in Creative mode.
+
+### Fixed
+
+- Fixed crashes when opening the Creative inventory on Fabric and NeoForge.
+- Fixed locked-slot frames not appearing on Forge.
+
 ## 0.1.1 - 2026-09-20
 
 ### Fixed

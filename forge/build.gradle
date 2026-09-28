@@ -24,6 +24,12 @@ minecraft {
     copyIdeResources = true
 
     runs {
+        configureEach {
+            // Forge 52 does not consume the [[mixins]] table in mods.toml.
+            // Register the config explicitly for the development launch.
+            args '--mixin.config=hotbarlocker.mixins.json'
+        }
+
         client {
             workingDirectory project.file('runs/client')
             property 'forge.logging.markers', 'REGISTRIES'
@@ -84,4 +90,11 @@ sourceSets.each {
     def outputDirectory = layout.buildDirectory.dir("sourceSets/${it.name}")
     it.output.resourcesDir = outputDirectory
     it.java.destinationDirectory = outputDirectory
+}
+
+tasks.named('jar', Jar) {
+    manifest {
+        // ModLauncher discovers the mixin config from the production JAR manifest.
+        attributes(['MixinConfigs': 'hotbarlocker.mixins.json'])
+    }
 }
