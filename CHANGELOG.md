@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.0 - 2026-10-14
+
+### Added
+
+- Support Minecraft 1.20.1 on Forge, including hotbar locks, gold frames, lock sounds, Creative inventory protection, and Create Toolbox handling.
+
 ## 0.2.0 - 2026-09-28
 
 ### Added

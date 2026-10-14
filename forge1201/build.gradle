@@ -1,0 +1,133 @@
+plugins {
+    id 'net.minecraftforge.gradle'
+}
+
+base.archivesName = "${mod_id}-forge-1.20.1"
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(forge1201_java_version as int)
+    withSourcesJar()
+}
+
+// Share the inventory policy, persistence, translations and Creative protection.
+// HUD and Create's packet contract differ between 1.20.1 and 1.21.1.
+sourceSets.main {
+    java.srcDir('../common/src/main/java')
+    java.exclude { it.file == project(':common').file('src/main/java/com/radaeli/hotbarlocker/mixin/client/GuiMixin.java') }
+    java.exclude { it.file == project(':common').file('src/main/java/com/radaeli/hotbarlocker/mixin/compat/create/ToolboxEquipPacketMixin.java') }
+    resources.srcDir('../common/src/main/resources')
+    resources.exclude { it.file == project(':common').file('src/main/resources/hotbarlocker.mixins.json') ||
+            it.file == project(':common').file('src/main/resources/pack.mcmeta') }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://api.modrinth.com/maven' }
+}
+sourceSets {
+    gameTest {
+        compileClasspath += main.output + main.compileClasspath
+        runtimeClasspath += main.output + main.runtimeClasspath
+    }
+}
+// Forge's development scanner expects classes and resources under one mod root.
+sourceSets.each {
+    def outputDirectory = layout.buildDirectory.dir("sourceSets/${it.name}")
+    it.output.resourcesDir = outputDirectory
+    it.java.destinationDirectory = outputDirectory
+}
+dependencies {
+    minecraft "net.minecraftforge:forge:${forge1201_minecraft_version}-${forge1201_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    testImplementation platform('org.junit:junit-bom:5.11.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    if (project.hasProperty('createValidationVersion')) {
+        runtimeOnly fg.deobf("maven.modrinth:create:${project.property('createValidationVersion')}")
+    }
+}
+
+minecraft {
+    mappings channel: 'official', version: forge1201_minecraft_version
+    copyIdeResources = true
+    runs {
+        configureEach {
+            args '--mixin.config=hotbarlocker.mixins.json'
+            property 'forge.logging.console.level', 'info'
+            // Remap production refmaps of optional mods (e.g. Create) in named dev runs.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', file('build/createSrgToMcp/output.srg').absolutePath
+            mods { "${mod_id}" { source sourceSets.main } }
+        }
+        client { workingDirectory project.file('runs/client') }
+        clientSmoke {
+            parent minecraft.runs.client
+            workingDirectory project.file('build/client-smoke')
+            property 'hotbarlocker.clientSmoke', 'true'
+            mods { "${mod_id}_tests" { source sourceSets.gameTest } }
+        }
+        server {
+            workingDirectory project.file('runs/server')
+            args '--nogui'
+        }
+        gameTestServer {
+            workingDirectory project.file(project.hasProperty('createValidationVersion') ?
+                    "build/gametest-create-${project.property('createValidationVersion').toString().replaceAll('[^A-Za-z0-9._-]', '_')}" : 'build/gametest')
+            property 'forge.enabledGameTestNamespaces', mod_id
+            property 'hotbarlocker.testCreate', project.hasProperty('createValidationVersion') ? 'true' : 'false'
+            mods { "${mod_id}_tests" { source sourceSets.gameTest } }
+        }
+    }
+}
+
+tasks.matching { it.name == 'runClientSmoke' }.configureEach {
+    timeout = java.time.Duration.ofMinutes(8)
+    doFirst {
+        def result = file('build/client-smoke/result.txt')
+        if (result.exists()) result.text = ''
+    }
+    doLast {
+        if (!file('build/client-smoke/result.txt').text.startsWith('PASS')) {
+            throw new GradleException('Forge 1.20.1 client validation failed; inspect build/client-smoke/result.txt and logs/latest.log')
+        }
+    }
+}
+
+// ForgeGradle reobfuscates the JAR; the Mixin AP must also remap injection names.
+def refmap = layout.buildDirectory.file('generated/mixins/hotbarlocker.refmap.json')
+def mixinMappings = layout.buildDirectory.file('generated/mixins/hotbarlocker.srg')
+tasks.named('createMcpToSrg') { format = 'SRG' }
+tasks.named('compileJava', JavaCompile) {
+    dependsOn 'createMcpToSrg'
+    options.compilerArgs += ["-AreobfSrgFile=${layout.buildDirectory.file('createMcpToSrg/output.tsrg').get().asFile}",
+                             "-AoutRefMapFile=${refmap.get().asFile}",
+                             "-AoutSrgFile=${mixinMappings.get().asFile}"]
+    outputs.file(refmap)
+    outputs.file(mixinMappings)
+    doFirst { refmap.get().asFile.parentFile.mkdirs() }
+}
+tasks.matching { it.name == 'reobfJar' }.configureEach { extraMappings.from(mixinMappings) }
+tasks.named('jar', Jar) {
+    manifest.attributes('MixinConfigs': 'hotbarlocker.mixins.json')
+    finalizedBy 'reobfJar'
+}
+tasks.named('build') { dependsOn 'reobfJar' }
+
+processResources {
+    dependsOn 'compileJava'
+    from(refmap)
+    def properties = [version: "${mod_version}+${forge1201_minecraft_version}", mod_id: mod_id,
+        mod_name: mod_name, mod_description: mod_description, mod_authors: mod_authors,
+        mod_license: mod_license, forge_version: forge1201_version]
+    inputs.properties(properties)
+    filesMatching('META-INF/mods.toml') { expand(properties) }
+}
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = forge1201_java_version as int
+}
+tasks.named('test') {
+    useJUnitPlatform()
+    dependsOn 'reobfJar'
+    inputs.file(tasks.named('jar').flatMap { it.archiveFile })
+    systemProperty 'hotbarlocker.jar', tasks.named('jar').get().archiveFile.get().asFile.absolutePath
+    systemProperty 'hotbarlocker.commonResources', project(':common').file('src/main/resources').absolutePath
+}
