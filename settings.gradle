@@ -12,4 +12,5 @@ rootProject.name = 'hotbar-locker'
 include('common')
 include('fabric')
 include('forge')
+include('forge1201')
 include('neoforge')

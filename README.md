@@ -1,49 +1,67 @@
-# Hotbar Locker
+<p align="center" style="text-align: center;"><img src="https://media.forgecdn.net/avatars/thumbnails/2059/772/256/256/639255174738055163.png" alt="Hotbar Locker"></p>
 
-Multiloader Minecraft mod for Fabric, Forge, and NeoForge, targeting Minecraft 1.21.1 and Java 21.
+<p align="center" style="text-align: center;">Keep your important items where you put them</p>
 
-The functional design is in [PRD.md](PRD.md).
+<p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/what_it_is.png" alt="WHAT IT IS?" width="267"></p>
 
-## More information
+Pick block and other equipment actions can replace the item in your selected hotbar slot. **Hotbar Locker** lets you lock individual slots so your tools and supplies stay put when items are placed automatically.
 
-See the concise [project page](docs/project-page.md) for player-facing
-behavior and compatibility.
+Choose a slot, press the key you assign, and see a gold frame when it is locked. Locks persist with your player, including after reconnecting or respawning.
 
-## Automation
+---
 
-- Pull requests to `main` run the full automated verification suite.
-- Pushes to `main` create a semantic version tag from Conventional Commit messages.
-- A `vX.Y.Z` tag builds the Fabric, Forge, and NeoForge artifacts and attaches them to a GitHub release as `hotbarlocker-X.Y.Z-fabric.jar`, `hotbarlocker-X.Y.Z-forge.jar`, and `hotbarlocker-X.Y.Z-neoforge.jar`.
+<p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/what_can_it_do.png" alt="WHAT CAN IT DO?" width="375"></p>
 
-## Requirements
+<p align="center" style="text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/locked-hud.png" alt="Locked hotbar slots marked with gold frames" width="420"></p>
 
-- Java 21
-- Windows: `C:\Users\lucca\.jdks\graalvm-jdk-21.0.12+7.1` is the validated local JDK.
+### Lock the slots you choose
 
-## Validate the scaffold
+**Protect selected hotbar slots from automatic replacement.** Lock only the items you want to keep in place; the other slots remain available as usual.
 
-```powershell
-$env:GRADLE_USER_HOME = "$PWD/.gradle-hotbarlocker"
-.\gradlew.bat '-Dorg.gradle.java.home=C:/Users/lucca/.jdks/graalvm-jdk-21.0.12+7.1' --no-daemon verifyScaffold --console=plain
-```
+- A gold frame marks each locked slot. A message and a sound confirm when you lock or unlock it.
+- You can still select, use, consume, damage, and move items manually.
+- Clearing the Creative inventory preserves locked hotbar stacks.
 
-## Development clients
+### Pick block and Toolbox
 
-```powershell
-.\gradlew.bat '-Dorg.gradle.java.home=C:/Users/lucca/.jdks/graalvm-jdk-21.0.12+7.1' --no-daemon :fabric:runClient
-.\gradlew.bat '-Dorg.gradle.java.home=C:/Users/lucca/.jdks/graalvm-jdk-21.0.12+7.1' --no-daemon :forge:runClient
-.\gradlew.bat '-Dorg.gradle.java.home=C:/Users/lucca/.jdks/graalvm-jdk-21.0.12+7.1' --no-daemon :neoforge:runClient
-```
+**Automatic equipment respects your locks.** Pick block uses an unlocked slot when possible. If every hotbar slot is locked, it uses available main-inventory space; if there is none, it leaves protected items alone.
 
-Each command owns its run directory under the corresponding loader module. Do not launch the three clients concurrently against the same Gradle user home.
+- When Create's Toolbox tries to equip an item into a locked slot, Hotbar Locker redirects it to an unlocked slot when possible.
+- If every hotbar slot is locked, Toolbox equipment is rejected safely.
+- Create is optional; Hotbar Locker works without it.
 
-## Layout
+---
 
-```text
-common/    Loader-neutral policy/API source and shared resources
-fabric/    Fabric entry points, metadata, and client adapter
-forge/     Forge entry points, metadata, and client adapter
-neoforge/  NeoForge entry points, metadata, and client adapter
-```
+<p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/how-do-i-use-it.png" alt="HOW DO I USE IT?" width="371"></p>
 
-The `common` source directory is compiled into each loader artifact with Mojang mappings. This avoids a runtime abstraction dependency while keeping the implementation shared.
+1. Open **Options → Controls → Key Binds** and assign **Toggle hotbar slot lock**.
+2. Select the hotbar slot you want to protect.
+3. Press your assigned key to lock or unlock that slot. Look for the gold frame and confirmation message.
+
+> **Heads up:** locking a slot only blocks automatic replacement. It does not stop you from moving or using the item yourself.
+
+---
+
+<p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/requirements.png" alt="REQUIREMENTS" width="355"></p>
+
+Install Hotbar Locker on both the client and server.
+
+- **Minecraft 1.20.1:** Forge 47.4.0
+- **Minecraft 1.21.1:** Fabric Loader 0.16.9, Forge 52.0.53, or NeoForge 21.1.236
+- **Fabric API:** required on Fabric (the project is built with 0.110.0+1.21.1)`n- **Create:** optional, for Create Toolbox compatibility
+
+---
+
+<p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/found_a_bug.png" alt="FOUND A BUG?" width="317"></p>
+
+[Open an issue on GitHub](https://github.com/radaelilucca/mc-hotbar-locker/issues). Include your Minecraft and loader versions, the action you were performing, and which slots were locked. A screenshot or short video can help show what happened.
+
+---
+
+<p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/can_i_use.png" alt="CAN I USE THIS IN A MODPACK?" width="679"></p>
+
+**Yes.** Hotbar Locker is licensed under the **MIT License**. See [LICENSE](https://github.com/radaelilucca/mc-hotbar-locker/blob/main/LICENSE).
+
+---
+
+*For development details, see the [development guide](https://github.com/radaelilucca/mc-hotbar-locker/blob/main/docs/development.md), [documentation index](https://github.com/radaelilucca/mc-hotbar-locker/blob/main/docs/README.md), and [CHANGELOG](https://github.com/radaelilucca/mc-hotbar-locker/blob/main/CHANGELOG.md).*

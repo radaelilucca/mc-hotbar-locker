@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+[[mods]]
+modId="hotbarlocker_tests"
+version="1.0"
+displayName="Hotbar Locker validation (development only)"

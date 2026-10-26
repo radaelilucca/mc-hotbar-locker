@@ -2,7 +2,7 @@ plugins {
     id 'base'
     id 'fabric-loom' version '1.9.2' apply false
     id 'net.neoforged.moddev' version '2.0.140' apply false
-    id 'net.minecraftforge.gradle' version '[6.0.24,6.2)' apply false
+    id 'net.minecraftforge.gradle' version '6.0.54' apply false
 }
 
 allprojects {
@@ -15,4 +15,11 @@ tasks.register('verifyScaffold') {
     description = 'Builds the common, Fabric, Forge, and NeoForge scaffold artifacts.'
     dependsOn(':common:check', ':fabric:build', ':forge:build', ':neoforge:build')
     dependsOn(':neoforge:runServerSmoke')
+    dependsOn('verifyForge1201')
+}
+
+tasks.register('verifyForge1201') {
+    group = 'verification'
+    description = 'Builds and tests the Forge 1.20.1 artifact and inventory Mixins on a dedicated GameTest server.'
+    dependsOn(':forge1201:build', ':forge1201:runGameTestServer')
 }

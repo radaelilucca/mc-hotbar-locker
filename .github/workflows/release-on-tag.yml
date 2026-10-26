@@ -33,6 +33,11 @@ jobs:
         with:
           ref: ${{ env.RELEASE_TAG }}
       - uses: actions/setup-java@v4
+        id: java17
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
@@ -43,7 +48,7 @@ jobs:
           set -euo pipefail
           [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
           chmod +x ./gradlew
-          ./gradlew -Pmod_version="${RELEASE_TAG#v}" verifyScaffold --no-daemon --no-parallel --console=plain
+          ./gradlew -Pmod_version="${RELEASE_TAG#v}" -Porg.gradle.java.installations.paths="${{ steps.java17.outputs.path }},$JAVA_HOME" verifyScaffold --no-daemon --no-parallel --console=plain
       - name: Collect release JARs
         shell: bash
         run: |
@@ -52,8 +57,9 @@ jobs:
           mkdir -p release-artifacts
           cp "fabric/build/libs/hotbarlocker-fabric-${version}.jar" "release-artifacts/hotbarlocker-${version}-fabric.jar"
           cp "forge/build/libs/hotbarlocker-forge-${version}.jar" "release-artifacts/hotbarlocker-${version}-forge.jar"
+          cp "forge1201/build/libs/hotbarlocker-forge-1.20.1-${version}.jar" "release-artifacts/hotbarlocker-${version}-forge-1.20.1.jar"
           cp "neoforge/build/libs/hotbarlocker-neoforge-${version}.jar" "release-artifacts/hotbarlocker-${version}-neoforge.jar"
-          test "$(find release-artifacts -type f | wc -l)" -eq 3
+          test "$(find release-artifacts -type f | wc -l)" -eq 4
       - uses: actions/upload-artifact@v4
         with:
           name: hotbar-locker-${{ env.RELEASE_TAG }}
