@@ -6,19 +6,19 @@
 
 Pick block and other equipment actions can replace the item in your selected hotbar slot. **Hotbar Locker** lets you lock individual slots so your tools and supplies stay put when items are placed automatically.
 
-Choose a slot, press the key you assign, and see a gold frame when it is locked. Locks persist with your player, including after reconnecting or respawning.
+Choose a slot, press the key you assign, and a gold frame traces around the slot, followed by a small padlock, when it is locked. Locks persist with your player, including after reconnecting or respawning.
 
 ---
 
 <p align="center" style="background-color: #F4ECD0; text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/section-titles/what_can_it_do.png" alt="WHAT CAN IT DO?" width="375"></p>
 
-<p align="center" style="text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/locked-hud.png" alt="Locked hotbar slots marked with gold frames" width="420"></p>
+<p align="center" style="text-align: center;"><img src="https://raw.githubusercontent.com/radaelilucca/mc-hotbar-locker/main/docs/gallery/locked-hud.png" alt="Locked hotbar slots marked with gold frames and padlocks" width="420"></p>
 
 ### Lock the slots you choose
 
 **Protect selected hotbar slots from automatic replacement.** Lock only the items you want to keep in place; the other slots remain available as usual.
 
-- A gold frame marks each locked slot. A message and a sound confirm when you lock or unlock it.
+- A thin gold frame and a padlock in the corner mark each locked slot, without covering the item, its stack count, or its durability bar. When a locked slot is selected, the selection outline turns gold too. A message and a sound confirm when you lock or unlock it.
 - You can still select, use, consume, damage, and move items manually.
 - Clearing the Creative inventory preserves locked hotbar stacks.
 
@@ -36,7 +36,7 @@ Choose a slot, press the key you assign, and see a gold frame when it is locked.
 
 1. Open **Options → Controls → Key Binds** and assign **Toggle hotbar slot lock**.
 2. Select the hotbar slot you want to protect.
-3. Press your assigned key to lock or unlock that slot. Look for the gold frame and confirmation message.
+3. Press your assigned key to lock or unlock that slot. Look for the gold frame, the padlock, and the confirmation message.
 
 > **Heads up:** locking a slot only blocks automatic replacement. It does not stop you from moving or using the item yourself.
 
@@ -48,7 +48,8 @@ Install Hotbar Locker on both the client and server.
 
 - **Minecraft 1.20.1:** Forge 47.4.0
 - **Minecraft 1.21.1:** Fabric Loader 0.16.9, Forge 52.0.53, or NeoForge 21.1.236
-- **Fabric API:** required on Fabric (the project is built with 0.110.0+1.21.1)`n- **Create:** optional, for Create Toolbox compatibility
+- **Fabric API:** required on Fabric (the project is built with 0.110.0+1.21.1)
+- **Create:** optional, for Create Toolbox compatibility
 
 ---
 

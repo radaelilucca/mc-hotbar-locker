@@ -11,6 +11,7 @@
         "--no-parallel",
         ":fabric:build",
         ":forge:build",
+        ":forge1201:build",
         ":neoforge:build",
         "--console=plain"
       ],

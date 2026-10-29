@@ -17,6 +17,7 @@ sourceSets {
         java.exclude('com/radaeli/hotbarlocker/HotbarLockService.java')
         java.exclude('com/radaeli/hotbarlocker/HotbarLockerApi.java')
         java.exclude('com/radaeli/hotbarlocker/mixin/**')
+        java.exclude('com/radaeli/hotbarlocker/client/**')
     }
 }
 

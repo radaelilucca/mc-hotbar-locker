@@ -1,10 +1,18 @@
 # Changelog
 
+## 0.4.0 - 2026-10-29
+
+### Changed
+
+- Redesigned locked-slot markers with a thin gold frame and padlock that leave the item, stack count, and durability bar visible.
+- Animated locking and unlocking with a gold frame that traces around the slot before the padlock clicks into place.
+- Turned the selected-slot outline gold while its slot is locked, with a matching trace animation and fade when the lock changes.
+
 ## 0.3.0 - 2026-10-14
 
 ### Added
 
-- Support Minecraft 1.20.1 on Forge, including hotbar locks, gold frames, lock sounds, Creative inventory protection, and Create Toolbox handling.
+- Added support for Minecraft 1.20.1 on Forge.
 
 ## 0.2.0 - 2026-09-28
 

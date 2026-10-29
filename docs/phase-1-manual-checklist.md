@@ -3,7 +3,7 @@
 Execute esta lista em um mundo criativo e, depois, em um mundo de sobrevivência para cada loader suportado.
 
 1. Em `Options > Controls > Hotbar Locker`, atribua uma tecla a `Toggle hotbar slot lock`.
-2. Selecione um slot, use a tecla e confirme a mensagem acima da barra de experiência e a moldura dourada no slot. A seleção vanilla deve continuar visível. Confirme o som de experiência mais grave ao travar e mais agudo ao destravar.
+2. Selecione um slot, use a tecla e confirme a mensagem acima da barra de experiência a moldura dourada animada (da base ao topo) e o cadeado no canto do slot. O item, a contagem e a barra de durabilidade devem continuar visíveis, assim como a seleção vanilla. Confirme o som de experiência mais grave ao travar e mais agudo ao destravar.
 3. Trave um slot ocupado, deixe o próximo slot vazio e faça middle-click em um bloco novo: o item deve ir ao primeiro slot desbloqueado e esse slot deve ser selecionado.
 4. Faça middle-click em um item já presente em uma hotbar travada: o item deve apenas ser selecionado.
 5. Trave os nove slots e faça creative pick: nenhum slot travado pode mudar; com espaço disponível, o item deve aparecer apenas no inventário principal.

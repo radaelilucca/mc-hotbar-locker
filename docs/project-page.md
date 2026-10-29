@@ -23,8 +23,11 @@ requested for a locked slot is redirected to an unlocked slot, preferring an
 empty space.
 If every hotbar slot is locked, Toolbox equip is safely rejected.
 
-Locked slots have an inset gold frame. A short message and distinct lock/unlock
-sounds confirm changes. Locks persist across saving, reconnecting and respawning.
+Locked slots get a thin gold frame and a small padlock that never cover the item,
+its stack count or its durability bar. Locking animates the frame from the bottom
+of the slot to the top before the padlock clicks into place, and
+the selection outline turns gold while a locked slot is selected. A short message and
+distinct lock/unlock sounds confirm changes. Locks persist across saving, reconnecting and respawning.
 Creative inventory clearing preserves locked hotbar stacks.
 
 ## Compatibility
