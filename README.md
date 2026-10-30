@@ -1,4 +1,4 @@
-<p align="center" style="text-align: center;"><img src="https://media.forgecdn.net/avatars/thumbnails/2059/772/256/256/639255174738055163.png" alt="Hotbar Locker"></p>
+<p align="center" style="text-align: center;"><img src="https://github.com/radaelilucca/mc-hotbar-locker/blob/main/docs/gallery/locked-slot.gif?raw=true" alt="Hotbar Locker"></p>
 
 <p align="center" style="text-align: center;">Keep your important items where you put them</p>
 
